@@ -22,4 +22,8 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 
 ### Procedure
 
+#### Preliminary Setup
+
+
+
 ### Conclusion
