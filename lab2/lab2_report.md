@@ -9,3 +9,11 @@ Date of creation:
 Date of finish:  
 
 ## Laboratory Work No. 2: "Emulation of a Distributed Corporate Communication Network, Configuration of Static Routing Between Branches"
+
+### Objective
+
+### Tasks
+
+### Procedure
+
+### Conclusion
