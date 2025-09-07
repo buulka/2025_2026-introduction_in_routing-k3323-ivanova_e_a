@@ -1,6 +1,6 @@
 # 2025_2026-introduction_in_routing-k3323-ivanova_e_a
 
-This repository is dedicated to the course "Introduction to Enterprise Routing" at ITMO University (2025–2026)  
+This repository is dedicated to the "Introduction to Enterprise Routing" course at ITMO University (2025–2026)  
 
 Lab works:
   1. [Installing ContainerLab and Deploying a Test Communication Network](lab1/lab1_report.md)
