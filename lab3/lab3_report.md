@@ -4,7 +4,7 @@ Course: [Introduction in routing](https://github.com/itmo-ict-faculty/introducti
 Year: 2025/2026  
 Group: K3323  
 Author: Ivanova Ekaterina Andreevna  
-Lab: Lab2  
+Lab: Lab3  
 Date of creation:    
 Date of finish:  
 
