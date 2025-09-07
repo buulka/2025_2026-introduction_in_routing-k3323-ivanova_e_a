@@ -9,3 +9,11 @@ Date of creation:
 Date of finish:  
 
 ## Laboratory Work No. 4: "Emulation of a Distributed Corporate Communication Network, Configuration of iBGP, Implementation of L3VPN and VPLS"
+
+### Objective
+
+### Tasks
+
+### Procedure
+
+### Conclusion
