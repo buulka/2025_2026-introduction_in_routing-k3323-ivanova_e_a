@@ -10,6 +10,9 @@ Date of finish:
 
 ## Laboratory Work No. 1: "Installing ContainerLab and Deploying a Test Communication Network"
 
+### Helpful sources
+  - [Simple deployment of a container-based network lab](https://habr.com/ru/articles/682974/)
+    
 ### Objective
 
 Become familiar with the ContainerLab tool, study the operation of VLANs, IP addressing, and related concepts
@@ -22,8 +25,11 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 
 ### Procedure
 
+
 #### Preliminary Setup
 
 
 
 ### Conclusion
+
+
