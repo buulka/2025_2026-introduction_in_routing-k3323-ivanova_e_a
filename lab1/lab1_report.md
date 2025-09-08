@@ -63,7 +63,7 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 
 It is required to build a three-tier enterprise network, as shown in Picture 1, using ContainerLab
 
-![Picture 1](/images/3tiernetwork.png)
+![](./images/3tiernetwork.png)
 
 
 
