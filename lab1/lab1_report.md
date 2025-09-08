@@ -28,6 +28,43 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 
 #### Preliminary Setup
 
+- Install `Docker` and start an engine 
+  [Manual for Ubuntu](https://docs.docker.com/engine/install/ubuntu/)  
+
+
+- Install `make`
+    ```commandline
+    # sudo apt install make
+    # make --version
+    ```
+
+- Clone `hellt/vrnetlab`
+    ```commandline
+    # git clone https://github.com/srl-labs/vrnetlab.git
+    ```
+- Copy to `vrnetlab/mikrotik/routeros` VDM with MikroTik RouterOS
+    ```commandline
+    # scp ~/Downloads/chr-6.47.9.vmdk {user}@{server}:~/vrnetlab/mikrotik/routeros
+    ```
+- Create an image
+    ```commandline
+    # make docker-image
+    ```
+- Install ContainerLab
+    ```commandline
+    curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
+    ```
+- To enable sudo-less docker command execution run 
+    ```commandline
+    newgrp docker
+    ```
+
+#### Main part
+
+It is required to build a three-tier enterprise network, as shown in Picture 1, using ContainerLab
+
+![Picture 1](/images/3tiernetwork.png)
+
 
 
 ### Conclusion
