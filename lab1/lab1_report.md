@@ -161,7 +161,7 @@ mgmt-сеть (managed network) - это изолированная вспомо
 Попробуем задеплоить нашу сеть командой `clab deploy -t tplg1.clab.yml`
 
 2 часа пробуем и в итоге запускаем для PC два внешних контейнера,
-потому что на моей машине на системном уровне отключен ipv6 и я ловлю ошибку
+потому что на моей машине на системном уровне отключен ipv6 и я ловлю ошибку:
 
 ```commandline
 00:43:38 ERRO failed deploy stage for node "PC1": 
@@ -169,6 +169,25 @@ Error response from daemon: failed to create task for
 container: failed to create shim task: OCI runtime create 
 failed: runc create failed: unable to start container process: error during container init: 
 open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2 fsmount:fscontext:proc/./sys/net/ipv6/conf/all/disable_ipv6: no such file or directory
+```
+
+```commandline
+$ docker run -d --name PC1 alpine:3.18 sleep infinity
+$ docker run -d --name PC2 alpine:3.18 sleep infinity
+
+$ sudo clab deploy -t tplg1.clab.yml
+```
+
+```commandline
+  PC1:
+    kind: ext-container
+    image: alpine:3.18
+    mgmt-ipv4: 172.20.20.101
+
+  PC2:
+    kind: ext-container
+    image: alpine:3.18
+    mgmt-ipv4: 172.20.20.102
 ```
 
 Вот так сейчас выглядит наша сеть:
