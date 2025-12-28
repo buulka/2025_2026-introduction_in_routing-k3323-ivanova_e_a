@@ -208,7 +208,7 @@ open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2
   ```
 
 - VLAN-интерфейсы и ip адреса на них
-- 
+
   ```commandline
   /interface vlan
   add name=vlan10 interface=eth2 vlan-id=10
@@ -234,7 +234,17 @@ open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2
   /ip dhcp-server enable dhcp_vlan20
   ```
 
+Для SW01:
+
+- Смена имени устройства, логина и пароля:
+  
+  ```commandline
+  /system identity set name=SW01
+  /user set 0 name=kate password=123
+  ```
+
+
+
+
 
 #### Conclusion
-
-
