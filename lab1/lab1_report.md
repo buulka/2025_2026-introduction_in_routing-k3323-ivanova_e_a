@@ -172,10 +172,10 @@ open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2
 ```
 
 ```commandline
-$ docker run -d --name PC1 alpine:3.18 sleep infinity
-$ docker run -d --name PC2 alpine:3.18 sleep infinity
+  # docker run -d --name PC1 alpine:3.18 sleep infinity
+  # docker run -d --name PC2 alpine:3.18 sleep infinity
 
-$ sudo clab deploy -t tplg1.clab.yml
+  # sudo clab deploy -t tplg1.clab.yml
 ```
 
 ```commandline
@@ -203,16 +203,13 @@ $ sudo clab deploy -t tplg1.clab.yml
 - Смена имени устройства, логина и пароля:
   
   ```commandline
-
   /system identity set name=R01 # задаем имя устройства
   /user set 0 name=kate password=123 # изменяем креды встроенного пользователя
-
   ```
 
 - VLAN-интерфейсы и ip адреса на них
-
+- 
   ```commandline
-
   /interface vlan
   add name=vlan10 interface=eth2 vlan-id=10
   add name=vlan20 interface=eth3 vlan-id=20
@@ -220,8 +217,6 @@ $ sudo clab deploy -t tplg1.clab.yml
   /ip address
   add address=192.168.10.1/24 interface=vlan10
   add address=192.168.20.1/24 interface=vlan20
-
-
   ```
 
 - DHCP серверы и диапазоны адресов
@@ -237,7 +232,6 @@ $ sudo clab deploy -t tplg1.clab.yml
 
   /ip dhcp-server enable dhcp_vlan10 # активируем dhcp-сервера
   /ip dhcp-server enable dhcp_vlan20
-
   ```
 
 
