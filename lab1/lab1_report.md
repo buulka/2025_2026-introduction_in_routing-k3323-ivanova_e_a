@@ -11,13 +11,15 @@ Date of finish:
 ## Laboratory Work No. 1: "Installing ContainerLab and Deploying a Test Communication Network"
 
 ### Helpful sources
-  - [Simple deployment of a container-based network lab](https://habr.com/ru/articles/682974/)
-    
+
+- [Simple deployment of a container-based network lab](https://habr.com/ru/articles/682974/)
+
 ### Objective
 
 Become familiar with the ContainerLab tool, study the operation of VLANs, IP addressing, and related concepts
 
 ### Tasks
+
   1. Build a three-tier enterprise communication network in ContainerLab
   2. Configure IP addresses on interfaces and set up two VLANs on the PC
   3. Create two DHCP servers on the central router within the previously created VLANs to distribute IP addresses
@@ -25,14 +27,13 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 
 ### Procedure
 
-
 #### Preliminary Setup
 
-- Install `Docker` and start an engine 
+- Install `Docker` and start an engine
   [Manual for Ubuntu](https://docs.docker.com/engine/install/ubuntu/)  
 
-
 - Install `make`
+
     ```commandline
     # sudo apt install make
     # make --version
@@ -43,19 +44,27 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
     ```commandline
     # git clone https://github.com/srl-labs/vrnetlab.git
     ```
+
 - Copy to `vrnetlab/mikrotik/routeros` VDM with MikroTik RouterOS
+
     ```commandline
     # scp ~/Downloads/chr-6.47.9.vmdk ~/vrnetlab/mikrotik/routeros
     ```
+
 - Create an image
+
     ```commandline
     # make docker-image
     ```
+
 - Install ContainerLab
+
     ```commandline
     curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
     ```
-- To enable sudo-less docker command execution run 
+
+- To enable sudo-less docker command execution run
+
     ```commandline
     newgrp docker
     ```
@@ -74,37 +83,37 @@ It is required to build a three-tier enterprise network, as shown in Picture 1, 
 name: tplg1
 
 topology:
-	nodes:
-		R01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
-		
+ nodes:
+  R01.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
+  
     SW01.L3.01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
-			
-		SW02.L3.01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
-			
-		SW02.L3.02.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
-			
-		PC1:
-			kind: linux
-			image: alpine:latest
-			
-		PC2:
-			kind: linux
-			image: alpine:latest
-			
-	links:
-		- endpoints: ["R01.TEST:eth1", "SW01.L3.01.TEST:eth1"]
-		- endpoints: ["SW01.L3.01.TEST:eth2", "SW02.L3.01.TEST:eth1"]
-		- endpoints: ["SW01.L3.01.TEST:eth3", "SW02.L3.02.TEST:eth1"]
-		- endpoints: ["SW02.L3.01.TEST:eth2", "PC1:eth1"]
-		- endpoints: ["SW02.L3.02.TEST:eth2", "PC2:eth1"]
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
+   
+  SW02.L3.01.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
+   
+  SW02.L3.02.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
+   
+  PC1:
+   kind: linux
+   image: alpine:latest
+   
+  PC2:
+   kind: linux
+   image: alpine:latest
+   
+ links:
+  - endpoints: ["R01.TEST:eth1", "SW01.L3.01.TEST:eth1"]
+  - endpoints: ["SW01.L3.01.TEST:eth2", "SW02.L3.01.TEST:eth1"]
+  - endpoints: ["SW01.L3.01.TEST:eth3", "SW02.L3.02.TEST:eth1"]
+  - endpoints: ["SW02.L3.01.TEST:eth2", "PC1:eth1"]
+  - endpoints: ["SW02.L3.02.TEST:eth2", "PC2:eth1"]
 ```
 
 Созданы 4 контейнера типа vr-ros на базе скачанного ранее образа, а также 2 ПК на базе alpine
@@ -112,46 +121,46 @@ topology:
 
 ### Создание mgmt-сети
 
-mgmt-сеть (managed network) - это изолированная вспомогательная сеть управления, через которую мы будем подключаться к нашим контейнерам 
+mgmt-сеть (managed network) - это изолированная вспомогательная сеть управления, через которую мы будем подключаться к нашим контейнерам
 
 Пропишем каждому устройству его статический ipv4-адрес:
 
 ```commandline
-	nodes:
-		R01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
+ nodes:
+  R01.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt_ipv4: 172.20.20.11
-		
+  
     SW01.L3.01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt_ipv4: 172.20.20.21
-			
-		SW02.L3.01.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
+   
+  SW02.L3.01.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt_ipv4: 172.20.20.31
-			
-		SW02.L3.02.TEST:
-			kind: vr-ros
-			image: vrnetlab/mikrotik_routeros:6.47.9
+   
+  SW02.L3.02.TEST:
+   kind: vr-ros
+   image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt_ipv4: 172.20.20.32
-			
-		PC1:
-			kind: linux
-			image: alpine:latest
+   
+  PC1:
+   kind: linux
+   image: alpine:latest
       mgmt_ipv4: 172.20.20.41
-			
-		PC2:
-			kind: linux
-			image: alpine:latest
+   
+  PC2:
+   kind: linux
+   image: alpine:latest
       mgmt_ipv4: 172.20.20.42
 ```
 
 Попробуем задеплоить нашу сеть командой `clab deploy -t tplg1.clab.yml`
 
-2 часа пробуем и в итоге запускаем для PC два внешних контейнера, 
+2 часа пробуем и в итоге запускаем для PC два внешних контейнера,
 потому что на моей машине на системном уровне отключен ipv6 и я ловлю ошибку
 
 ```commandline
@@ -165,6 +174,52 @@ open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2
 Вот так сейчас выглядит наша сеть:
 
 ![](./images/n1.png)
+
+### Настройка конфигураций
+
+Для каждого устройства создадим конфиг файл
+
+Для R01:
+
+- Смена имени устройства, логина и пароля:
+  
+  ```commandline
+
+  /system identity set name=R01 # задаем имя устройства
+  /user set 0 name=kate password=123 # изменяем креды встроенного пользователя
+
+  ```
+
+- VLAN-интерфейсы и ip адреса на них
+
+  ```commandline
+
+  /interface vlan
+  add name=vlan10 interface=eth2 vlan-id=10
+  add name=vlan20 interface=eth3 vlan-id=20
+
+  /ip address
+  add address=192.168.10.1/24 interface=vlan10
+  add address=192.168.20.1/24 interface=vlan20
+
+
+  ```
+
+- DHCP серверы и диапазоны адресов
+
+  ```commandline
+  /ip pool # определяем диапазоны адресов, которые будут раздаваться
+  add name=pool_vlan10 ranges=192.168.10.10-192.168.10.100 
+  add name=pool_vlan20 ranges=192.168.20.10-192.168.20.100
+
+  /ip dhcp-server # создаем dhcp-серверы на каждом VLAN
+  add name=dhcp_vlan10 interface=vlan10 address-pool=pool_vlan10
+  add name=dhcp_vlan20 interface=vlan20 address-pool=pool_vlan20
+
+  /ip dhcp-server enable dhcp_vlan10 # активируем dhcp-сервера
+  /ip dhcp-server enable dhcp_vlan20
+
+  ```
 
 
 #### Conclusion
