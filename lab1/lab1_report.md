@@ -243,6 +243,12 @@ open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2
   /user set 0 name=kate password=123
   ```
 
+docker build -t pc:latest -f docker/Dockerfile.pc .
+docker run -d --name PC1 --privileged pc:latest 
+docker run -d --name PC2 --privileged pc:latest 
+
+
+docker stop $(docker ps -q) && docker rm $(docker ps -aq)
 
 
 
