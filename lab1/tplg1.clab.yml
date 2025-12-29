@@ -32,7 +32,7 @@ topology:
 
     PC1:
       kind: linux
-      image: ubuntu:22.04
+      image: alpine:latest
       mgmt-ipv4: 172.20.20.101
       binds:
         - ./config:/config
@@ -41,7 +41,7 @@ topology:
 
     PC2:
       kind: linux
-      image: ubuntu:22.04
+      image: alpine:latest
       mgmt-ipv4: 172.20.20.102
       binds:
         - ./config:/config
