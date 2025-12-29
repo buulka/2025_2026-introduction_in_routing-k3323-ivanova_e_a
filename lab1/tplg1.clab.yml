@@ -32,16 +32,16 @@ topology:
 
     PC1:
       kind: linux
-      image: ubuntu:latest
+      image: alpine:latest
       mgmt-ipv4: 172.20.20.101
       binds:
         - ./config:/config
       exec:
-        - sh /configs/PC1.sh
+        - sh /config/PC1.sh
 
     PC2:
       kind: linux
-      image: ubuntu:latest
+      image: alpine:latest
       mgmt-ipv4: 172.20.20.102
       binds:
         - ./config:/config
