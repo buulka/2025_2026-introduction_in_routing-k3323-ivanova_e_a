@@ -22,13 +22,13 @@ topology:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.16.16.102
-      startup-config: config/sw02_l3_01.rsc
+      startup-config: config/sw02-l3-01.rsc
 
     SW02.L3.02:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.16.16.103
-      startup-config: config/sw02_l3_02.rsc
+      startup-config: config/sw02-l3-02.rsc
 
     PC1:
       kind: linux
