@@ -229,14 +229,10 @@ sudo containerlab inspect -t tplg1.clab.yml
   /user set 0 name=kate password=123
   ```
 
-docker build -t pc:latest -f docker/Dockerfile.pc .
-docker run -d --name PC1 --privileged pc:latest 
-docker run -d --name PC2 --privileged pc:latest 
-
-
-docker stop $(docker ps -q) && docker rm $(docker ps -aq)
-
-
-
+Добавим `startup-config` в файл с топологией и пересоберем сеть командой 
+```commandline
+sudo containerlab redeploy -t tplg1.clab.yml 
+```
+![](./images/p2.png)
 
 #### Conclusion
