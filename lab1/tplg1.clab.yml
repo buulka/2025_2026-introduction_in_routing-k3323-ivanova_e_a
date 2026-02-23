@@ -33,7 +33,7 @@ topology:
     PC1:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.160.20.101
+      mgmt-ipv4: 172.160.15.101
       binds:
         - ./config:/config
       exec:
@@ -42,7 +42,7 @@ topology:
     PC2:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.160.20.102
+      mgmt-ipv4: 172.160.15.102
       binds:
         - ./config:/config
       exec:
