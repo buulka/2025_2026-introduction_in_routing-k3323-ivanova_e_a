@@ -6,76 +6,71 @@ Group: K3323
 Author: Ivanova Ekaterina Andreevna  
 Lab: Lab1  
 Date of creation: 07.09.2025  
-Date of finish:  
+Date of finish: 31.12.2025
 
-## Laboratory Work No. 1: "Installing ContainerLab and Deploying a Test Communication Network"
+## Лабораторная работ №1 "Установка ContainerLab и развертывание тестовой сети связи"
 
-### Helpful sources
+### Полезные ресурсы
 
 - [Simple deployment of a container-based network lab](https://habr.com/ru/articles/682974/)
 
-### Objective
-
-Become familiar with the ContainerLab tool, study the operation of VLANs, IP addressing, and related concepts
+### Описание
+В данной лабораторной работе вы познакомитесь с инструментом ContainerLab, развернете тестовую сеть связи, настроите оборудование на базе Linux и RouterOS.
 
 ### Tasks
 
-  1. Build a three-tier enterprise communication network in ContainerLab
-  2. Configure IP addresses on interfaces and set up two VLANs on the PC
-  3. Create two DHCP servers on the central router within the previously created VLANs to distribute IP addresses
-  4. Configure device hostnames and change logins and passwords
+1. Построить трехуровневую корпоративную сеть связи в ContainerLab
+2. Настроить IP-адреса на интерфейсах и создать два VLAN на ПК
+3. Создать два DHCP-сервера на центральном маршрутизаторе в ранее созданных VLAN для распределения IP-адресов
+4. Настроить имена устройств (hostnames) и изменить логины и пароли
 
-### Procedure
+![](./images/3tiernetwork.png)
 
-#### Preliminary Setup
+### Ход работы
 
-- Install `Docker` and start an engine
+#### Подготовка
+
+- Установим `Docker` и запустим engine
   [Manual for Ubuntu](https://docs.docker.com/engine/install/ubuntu/)  
 
-- Install `make`
+- Установим `make`
 
     ```commandline
     sudo apt install make
     make --version
     ```
 
-- Clone `hellt/vrnetlab`
+- Склонируем `hellt/vrnetlab`
 
     ```commandline
     git clone https://github.com/srl-labs/vrnetlab.git
     ```
 
-- Copy to `vrnetlab/mikrotik/routeros` VDM with MikroTik RouterOS
+- Скопируем `vrnetlab/mikrotik/routeros` VDM с MikroTik RouterOS
 
     ```commandline
     scp ~/Downloads/chr-6.47.9.vmdk ~/vrnetlab/mikrotik/routeros
     ```
 
-- Create an image
+- Создадим образ
 
     ```commandline
     make docker-image
     ```
 
-- Install ContainerLab
+- Установим ContainerLab
 
     ```commandline
     curl -sL https://containerlab.dev/setup | sudo -E bash -s "all"
     ```
 
-- To enable sudo-less docker command execution run
+- Запустим команду, чтобы обеспечить sudo-less docker 
 
     ```commandline
     newgrp docker
     ```
 
-#### Main part
-
-It is required to build a three-tier enterprise network, as shown in Picture 1, using ContainerLab
-
-![](./images/3tiernetwork.png)
-
-### Базовая конфигурация
+#### Базовая конфигурация
 
 Для начала напишем базовый *.clab.yml файл, где создадим наши устройства и укажем связи между ними
 
@@ -119,7 +114,7 @@ topology:
 Созданы 4 контейнера типа vr-ros на базе скачанного ранее образа, а также 2 ПК на базе alpine
 Дополнительно указаны связи между всеми устройствами согласно схеме из задания
 
-### Создание mgmt-сети
+#### Создание mgmt-сети
 
 mgmt-сеть (managed network) - это изолированная вспомогательная сеть управления, через которую мы будем подключаться к нашим контейнерам
 
@@ -180,7 +175,7 @@ sudo containerlab inspect -t tplg1.clab.yml
 ```
 ![](./images/p1.png)
 
-### Настройка конфигураций
+#### Настройка конфигураций
 
 Для каждого устройства создадим конфиг файл
 
@@ -235,4 +230,57 @@ sudo containerlab redeploy -t tplg1.clab.yml
 ```
 ![](./images/p2.png)
 
-#### Conclusion
+#### Схема сети
+Создадим схему созданной сети командой 
+```commandline
+containerlab graph -t tplg1.clab.yml
+```
+![](./images/graph.png)
+
+Отлично, граф соответствует схеме из задания 
+
+#### Проверка связности
+Подключимся к PC1 и попробуем отправить пинг на PC2
+```commandline
+docker exec -it clab-tplg1-PC1 sh
+```
+
+```commandline
+/ # ping -c 5 10.20.0.1
+PING 10.20.0.1 (10.20.0.1): 56 data bytes
+64 bytes from 10.20.0.1: seq=0 ttl=64 time=3.275 ms
+64 bytes from 10.20.0.1: seq=1 ttl=64 time=2.112 ms
+64 bytes from 10.20.0.1: seq=2 ttl=64 time=2.326 ms
+64 bytes from 10.20.0.1: seq=3 ttl=64 time=2.092 ms
+64 bytes from 10.20.0.1: seq=4 ttl=64 time=2.204 ms
+
+--- 10.20.0.1 ping statistics ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 2.092/2.401/3.275 ms
+```
+Теперь отправим пинг с PC2 на PC2
+
+```commandline
+docker exec -it clab-tplg1-PC2 sh
+```
+
+```commandline
+/ # ping -c 5 10.20.0.2
+PING 10.20.0.2 (10.20.0.2): 56 data bytes
+64 bytes from 10.20.0.2: seq=0 ttl=64 time=3.287 ms
+64 bytes from 10.20.0.2: seq=1 ttl=64 time=1.490 ms
+64 bytes from 10.20.0.2: seq=2 ttl=64 time=1.614 ms
+64 bytes from 10.20.0.2: seq=3 ttl=64 time=1.455 ms
+64 bytes from 10.20.0.2: seq=4 ttl=64 time=1.335 ms
+
+--- 10.20.0.2 ping statistics ---
+5 packets transmitted, 5 packets received, 0% packet loss
+round-trip min/avg/max = 1.335/1.836/3.287 ms
+```
+### Вывод
+
+В ходе выполнения лабораторной работы был освоен инструмент ContainerLab и развернута
+трехуровневая корпоративная сеть с центральным маршрутизатором и коммутаторами доступа. 
+Настроены VLAN, DHCP-серверы для автоматического распределения IP-адресов, а также выполнена 
+базовая конфигурация устройств. В результате создана полностью функционирующая сеть с корректной 
+маршрутизацией между VLAN и автоматической выдачей IP-адресов оконечным устройствам.
