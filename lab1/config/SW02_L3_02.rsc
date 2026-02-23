@@ -1,5 +1,5 @@
 /system identity
-set name=SW01
+set name=SW02_L3_02
 
 /user
 add name=kate password=123 group=full
