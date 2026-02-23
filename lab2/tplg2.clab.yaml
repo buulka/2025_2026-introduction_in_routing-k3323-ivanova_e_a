@@ -31,7 +31,7 @@ topology:
       binds:
         - ./config:/config
       exec:
-        - sh /config/pc1.sh
+        - sh /config/pc.sh
 
     PC2:
       kind: linux
@@ -40,7 +40,7 @@ topology:
       binds:
         - ./config:/config
       exec:
-        - sh /config/pc2.sh
+        - sh /config/pc.sh
 
     PC3:
       kind: linux
@@ -49,7 +49,7 @@ topology:
       binds:
         - ./config:/config
       exec:
-        - sh /config/pc3.sh
+        - sh /config/pc.sh
 
   links:
     - endpoints: ["MSK:eth1", "FRT:eth1"]
