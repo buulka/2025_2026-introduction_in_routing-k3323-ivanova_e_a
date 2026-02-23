@@ -5,7 +5,7 @@ set name=SW01
 add name=kate password=123 group=full
 
 /interface bridge
-add name=bridge1 vlan-filtering=yes
+add name=bridge vlan-filtering=yes
 
 /interface vlan
 add name=vlan10 vlan-id=10 interface=bridge

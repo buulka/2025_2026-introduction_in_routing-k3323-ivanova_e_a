@@ -8,7 +8,7 @@ add name=kate password=123 group=full
 add name=bridge
 
 /interface vlan
-add name=vlan20 vlan-id=20 interface=bridge1
+add name=vlan20 vlan-id=20 interface=bridge
 
 /interface bridge port
 add bridge=bridge interface=ether2
