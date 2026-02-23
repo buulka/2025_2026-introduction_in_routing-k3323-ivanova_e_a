@@ -7,3 +7,4 @@ udhcpc -i vlan20
 
 ip route add 192.168.10.0/24 via 192.168.20.1 dev vlan20
 
+ip route show
