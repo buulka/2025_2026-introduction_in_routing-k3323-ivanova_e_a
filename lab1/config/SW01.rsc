@@ -21,5 +21,5 @@ add bridge=bridge1 tagged=bridge1,ether2,ether3 vlan-ids=10
 add bridge=bridge1 tagged=bridge1,ether2,ether4 vlan-ids=20
 
 /ip address
-add address=192.168.10.2/24 interface=vlan10
-add address=192.168.20.2/24 interface=vlan20
+add address=10.10.0.2/24 interface=vlan10
+add address=10.20.0.2/24 interface=vlan20
