@@ -14,6 +14,7 @@ add name=dhcp_pool_frt ranges=10.10.20.100-10.10.20.200
 
 /ip dhcp-server
 add name=dhcp_frt interface=ether4 address-pool=dhcp_pool_frt
+enable dhcp_msk
 
 /ip dhcp-server network
 add address=10.10.20.0/24 gateway=10.10.20.1
