@@ -5,4 +5,4 @@ ip link set vlan10 up
 
 udhcpc -i vlan10
 
-ip route add default via 192.168.10.1 dev vlan10
+ip route add 192.168.20.0/24 via 192.168.10.1 dev vlan10
