@@ -35,26 +35,26 @@ Become familiar with the ContainerLab tool, study the operation of VLANs, IP add
 - Install `make`
 
     ```commandline
-    # sudo apt install make
-    # make --version
+    sudo apt install make
+    make --version
     ```
 
 - Clone `hellt/vrnetlab`
 
     ```commandline
-    # git clone https://github.com/srl-labs/vrnetlab.git
+    git clone https://github.com/srl-labs/vrnetlab.git
     ```
 
 - Copy to `vrnetlab/mikrotik/routeros` VDM with MikroTik RouterOS
 
     ```commandline
-    # scp ~/Downloads/chr-6.47.9.vmdk ~/vrnetlab/mikrotik/routeros
+    scp ~/Downloads/chr-6.47.9.vmdk ~/vrnetlab/mikrotik/routeros
     ```
 
 - Create an image
 
     ```commandline
-    # make docker-image
+    make docker-image
     ```
 
 - Install ContainerLab
@@ -160,39 +160,25 @@ mgmt-сеть (managed network) - это изолированная вспомо
 
 Попробуем задеплоить нашу сеть командой `clab deploy -t tplg1.clab.yml`
 
-2 часа пробуем и в итоге запускаем для PC два внешних контейнера,
-потому что на моей машине на системном уровне отключен ipv6 и я ловлю ошибку:
-
+Получаем WARNING 
 ```commandline
-00:43:38 ERRO failed deploy stage for node "PC1": 
-Error response from daemon: failed to create task for 
-container: failed to create shim task: OCI runtime create 
-failed: runc create failed: unable to start container process: error during container init: 
-open sysctl net.ipv6.conf.all.disable_ipv6 file: unsafe procfs detected: openat2 fsmount:fscontext:proc/./sys/net/ipv6/conf/all/disable_ipv6: no such file or directory
+15:57:11 WARN Node name will not resolve via DNS name=clab-tplg1-R01.TEST reason="name contains invalid characters such as '.' and/or '_'"
+15:57:11 WARN Node name will not resolve via DNS name=clab-tplg1-SW01.L3.01.TEST reason="name contains invalid characters such as '.' and/or '_'"
+15:57:11 WARN Node name will not resolve via DNS name=clab-tplg1-SW02.L3.01.TEST reason="name contains invalid characters such as '.' and/or '_'"
+15:57:11 WARN Node name will not resolve via DNS name=clab-tplg1-SW02.L3.02.TEST reason="name contains invalid characters such as '.' and/or '_'"
 ```
 
+Переименуем наши ноды, убрав точки и снова задеплоим нашу сеть 
 ```commandline
-  # docker run -d --name PC1 alpine:3.18 sleep infinity
-  # docker run -d --name PC2 alpine:3.18 sleep infinity
-
-  # sudo clab deploy -t tplg1.clab.yml
+sudo containerlab destroy -t tplg1.clab.yml
+sudo containerlab deploy -t tplg1.clab.yml
 ```
 
+Проверим состояние сети
 ```commandline
-  PC1:
-    kind: ext-container
-    image: alpine:3.18
-    mgmt-ipv4: 172.20.20.101
-
-  PC2:
-    kind: ext-container
-    image: alpine:3.18
-    mgmt-ipv4: 172.20.20.102
+sudo containerlab inspect -t tplg1.clab.yml 
 ```
-
-Вот так сейчас выглядит наша сеть:
-
-![](./images/n1.png)
+![](./images/p1.png)
 
 ### Настройка конфигураций
 
