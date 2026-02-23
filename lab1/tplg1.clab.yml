@@ -2,38 +2,38 @@ name: tplg1
 
 mgmt:
   network: lab1
-  ipv4-subnet: 172.16.16.0/24
+  ipv4-subnet: 172.18.18.0/24
 
 topology:
   nodes:
     R01:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.16.16.100
+      mgmt-ipv4: 172.18.18.11
       startup-config: config/r01.rsc
 
     SW01:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.16.16.101
+      mgmt-ipv4: 172.18.18.21
       startup-config: config/sw01.rsc
 
-    SW02.L3.01:
+    SW02-L3-01:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.16.16.102
+      mgmt-ipv4: 172.18.18.31
       startup-config: config/sw02-l3-01.rsc
 
-    SW02.L3.02:
+    SW02-L3-02:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.16.16.103
+      mgmt-ipv4: 172.18.18.32
       startup-config: config/sw02-l3-02.rsc
 
     PC1:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.16.16.2
+      mgmt-ipv4: 172.18.18.101
       binds:
         - ./config:/config
       exec:
@@ -42,7 +42,7 @@ topology:
     PC2:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.16.16.3
+      mgmt-ipv4: 172.18.18.102
       binds:
         - ./config:/config
       exec:
@@ -52,5 +52,5 @@ topology:
     - endpoints: ["R01:eth1", "SW01:eth1"]
     - endpoints: ["SW01:eth2", "SW02.L3.01:eth1"]
     - endpoints: ["SW01:eth3", "SW02.L3.02:eth1"]
-    - endpoints: ["SW02.L3.01:eth2", "PC1:eth1"]
-    - endpoints: ["SW02.L3.02:eth2", "PC2:eth1"]
+    - endpoints: ["SW02-L3-01:eth2", "PC1:eth1"]
+    - endpoints: ["SW02-L3-02:eth2", "PC2:eth1"]
