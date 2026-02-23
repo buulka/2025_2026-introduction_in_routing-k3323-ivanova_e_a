@@ -1,7 +1,0 @@
-FROM alpine:3.18
-
-COPY ../configs/ /configs/
-
-RUN chmod +x /configs/*.sh
-
-CMD ["sleep", "infinity"]
