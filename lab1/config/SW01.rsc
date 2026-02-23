@@ -2,7 +2,7 @@
 set name=SW01
 
 /user
-set 0 name=kate password=123
+add name=kate password=123 group=full
 
 /interface bridge
 add name=bridge1 vlan-filtering=yes
@@ -23,17 +23,3 @@ add bridge=bridge1 tagged=bridge1,ether2,ether4 vlan-ids=20
 /ip address
 add address=192.168.10.2/24 interface=vlan10
 add address=192.168.20.2/24 interface=vlan20
-
-/ip pool
-add name=dhcp-pool10 ranges=192.168.10.10-192.168.10.254
-add name=dhcp-pool20 ranges=192.168.20.10-192.168.20.254
-
-/ip dhcp-server
-add address-pool=dhcp-pool10 disabled=no interface=vlan10 name=dhcp-server10
-add address-pool=dhcp-pool20 disabled=no interface=vlan20 name=dhcp-server20
-
-/ip dhcp-server network
-add address=192.168.10.0/24 gateway=192.168.10.2
-add address=192.168.20.0/24 gateway=192.168.20.2
-
-

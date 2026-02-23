@@ -2,26 +2,30 @@
 set name=R01
 
 /user
-set 0 name=kate password=123
-
-/interface bridge
-add name=bridge1 vlan-filtering=yes
+add name=kate password=123 group=full
 
 /interface vlan
-add name=vlan10 vlan-id=10 interface=bridge1
-add name=vlan20 vlan-id=20 interface=bridge1
-
-/interface bridge port
-add bridge=bridge1 interface=ether2
-add bridge=bridge1 interface=ether3
-
-/interface bridge vlan
-add bridge=bridge1 tagged=bridge1,ether2 vlan-ids=10
-add bridge=bridge1 tagged=bridge1,ether3 vlan-ids=20
+add name=vlan10 vlan-id=10 interface=ether2
+add name=vlan20 vlan-id=20 interface=ether2
 
 /ip address
 add address=192.168.10.1/24 interface=vlan10
 add address=192.168.20.1/24 interface=vlan20
+
+/ip pool
+add name=pool-vlan10 ranges=192.168.10.100-192.168.10.200
+add name=pool-vlan20 ranges=192.168.20.100-192.168.20.200
+
+/ip dhcp-server
+add address-pool=pool-vlan10 interface=vlan10 name=dhcp-vlan10
+add address-pool=pool-vlan20 interface=vlan20 name=dhcp-vlan20
+
+/ip dhcp-server network
+add address=192.168.10.0/24 gateway=192.168.10.1
+add address=192.168.20.0/24 gateway=192.168.20.1
+
+
+
 
 
 
