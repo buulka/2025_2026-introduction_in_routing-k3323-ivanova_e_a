@@ -2,7 +2,7 @@ name: tplg1
 
 mgmt:
   network: clab
-  ipv4-subnet: 172.160.15.0/24
+  ipv4-subnet: 172.160.16.0/24
 
 topology:
   nodes:
