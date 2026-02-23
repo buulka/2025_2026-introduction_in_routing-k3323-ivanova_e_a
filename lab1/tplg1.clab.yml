@@ -39,6 +39,6 @@ topology:
   links:
     - endpoints: ["R01-TEST:eth1", "SW01-L3-01-TEST:eth1"]
     - endpoints: ["SW01-L3-01-TEST:eth2", "SW02-L3-01-TEST:eth1"]
-    - endpoints: ["SW01-L3-01-TEST:eth3", "SW02-L3.02-TEST:eth1"]
+    - endpoints: ["SW01-L3-01-TEST:eth3", "SW02-L3-02-TEST:eth1"]
     - endpoints: ["SW02-L3-01-TEST:eth2", "PC1:eth1"]
     - endpoints: ["SW02-L3-02-TEST:eth2", "PC2:eth1"]
