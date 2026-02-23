@@ -6,22 +6,22 @@ mgmt:
 
 topology:
   nodes:
-    R01.TEST:
+    R01-TEST:
       kind: vr-mikrotik_ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.20.20.11
 
-    SW01.L3.01.TEST:
+    SW01-L3-01-TEST:
       kind: vr-mikrotik_ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.20.20.21
 
-    SW02.L3.01.TEST:
+    SW02-L3-01-TEST:
       kind: vr-mikrotik_ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.20.20.31
 
-    SW02.L3.02.TEST:
+    SW02-L3-02-TEST:
       kind: vr-mikrotik_ros
       image: vrnetlab/mikrotik_routeros:6.47.9
       mgmt-ipv4: 172.20.20.32
@@ -37,8 +37,8 @@ topology:
       mgmt-ipv4: 172.20.20.102
 
   links:
-    - endpoints: ["R01.TEST:eth1", "SW01.L3.01.TEST:eth1"]
-    - endpoints: ["SW01.L3.01.TEST:eth2", "SW02.L3.01.TEST:eth1"]
-    - endpoints: ["SW01.L3.01.TEST:eth3", "SW02.L3.02.TEST:eth1"]
-    - endpoints: ["SW02.L3.01.TEST:eth2", "PC1:eth1"]
-    - endpoints: ["SW02.L3.02.TEST:eth2", "PC2:eth1"]
+    - endpoints: ["R01-TEST:eth1", "SW01-L3-01-TEST:eth1"]
+    - endpoints: ["SW01-L3-01-TEST:eth2", "SW02-L3-01-TEST:eth1"]
+    - endpoints: ["SW01-L3-01-TEST:eth3", "SW02-L3.02-TEST:eth1"]
+    - endpoints: ["SW02-L3-01-TEST:eth2", "PC1:eth1"]
+    - endpoints: ["SW02-L3-02-TEST:eth2", "PC2:eth1"]
