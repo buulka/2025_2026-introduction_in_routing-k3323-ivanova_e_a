@@ -9,31 +9,31 @@ topology:
     R01-TEST:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.160.15.11
+      mgmt-ipv4: 172.160.15.100
       startup-config: config/R01.rsc
 
     SW01-L3-01-TEST:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.160.15.21
+      mgmt-ipv4: 172.160.15.101
       startup-config: config/SW01.rsc
 
     SW02-L3-01-TEST:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.160.15.31
+      mgmt-ipv4: 172.160.15.102
       startup-config: config/SW02_L3_01.rsc
 
     SW02-L3-02-TEST:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.160.15.32
+      mgmt-ipv4: 172.160.15.103
       startup-config: config/SW02_L3_02.rsc
 
     PC1:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.160.15.101
+      mgmt-ipv4: 172.160.15.2
       binds:
         - ./config:/config
       exec:
@@ -42,7 +42,7 @@ topology:
     PC2:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.160.15.102
+      mgmt-ipv4: 172.160.15.3
       binds:
         - ./config:/config
       exec:
