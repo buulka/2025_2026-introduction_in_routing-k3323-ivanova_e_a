@@ -9,7 +9,6 @@ set admin disabled=yes
 add name=lo
 
 /ip address
-add address=1.1.1.11/32 interface=lo
 add address=10.0.0.1/30 interface=ether2 comment="to LND"
 add address=10.0.0.22/30 interface=ether3 comment="to LBN"
 

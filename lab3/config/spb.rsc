@@ -17,7 +17,6 @@ add address=10.0.0.13/30 interface=ether3 comment="to MSK"
 set [find default=yes] router-id=1.1.1.14
 
 /routing ospf network
-add network=1.1.1.14/32 area=backbone
 add network=10.0.0.8/30 area=backbone
 add network=10.0.0.12/30 area=backbone
 
