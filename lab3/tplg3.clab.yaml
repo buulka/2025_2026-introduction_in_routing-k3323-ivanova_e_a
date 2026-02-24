@@ -37,7 +37,7 @@ topology:
     PC:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.17.17.101
+      mgmt-ipv4: 172.13.13.101
       binds:
         - ./config:/config
       exec:
@@ -45,7 +45,7 @@ topology:
     SGI:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.17.17.102
+      mgmt-ipv4: 172.13.13.102
       binds:
         - ./config:/config
       exec:
