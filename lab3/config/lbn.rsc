@@ -9,6 +9,7 @@ set admin disabled=yes
 add name=lo
 
 /ip address
+add address=1.1.1.15/32 interface=lo
 add address=10.0.0.18/30 interface=ether2 comment="to MSK"
 add address=10.0.0.21/30 interface=ether3 comment="to NY"
 add address=10.0.0.26/30 interface=ether4 comment="to HKI"

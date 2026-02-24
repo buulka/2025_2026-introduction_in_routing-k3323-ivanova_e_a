@@ -9,6 +9,7 @@ set admin disabled=yes
 add name=lo
 
 /ip address
+add address=1.1.1.14/32 interface=lo
 add address=10.0.0.10/30 interface=ether2 comment="to HKI"
 add address=10.0.0.13/30 interface=ether3 comment="to MSK"
 
@@ -16,9 +17,9 @@ add address=10.0.0.13/30 interface=ether3 comment="to MSK"
 set [find default=yes] router-id=1.1.1.14
 
 /routing ospf network
+add network=1.1.1.14/32 area=backbone
 add network=10.0.0.8/30 area=backbone
 add network=10.0.0.12/30 area=backbone
-add network=1.1.1.14/32 area=backbone
 
 /mpls interface
 add interface=ether2
