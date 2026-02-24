@@ -258,7 +258,7 @@ PING 10.20.0.1 (10.20.0.1): 56 data bytes
 5 packets transmitted, 5 packets received, 0% packet loss
 round-trip min/avg/max = 2.092/2.401/3.275 ms
 ```
-Теперь отправим пинг с PC2 на PC2
+Теперь отправим пинг с PC2 на PC1
 
 ```commandline
 docker exec -it clab-tplg1-PC2 sh
