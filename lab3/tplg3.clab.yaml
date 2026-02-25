@@ -53,11 +53,11 @@ topology:
 
   links:
     - endpoints: ["SPB:eth1","HKI:eth1"]
-    - endpoints: ["SPB:eth2","MSC:eth1"]
+    - endpoints: ["SPB:eth2","MSK:eth1"]
     - endpoints: ["SPB:eth3","PC:eth1"]
     - endpoints: ["HKI:eth2","LBN:eth2"]
     - endpoints: ["HKI:eth3","LND:eth1"]
-    - endpoints: ["MSC:eth2","LBN:eth1"]
+    - endpoints: ["MSK:eth2","LBN:eth1"]
     - endpoints: ["LND:eth2","NY:eth1"]
     - endpoints: ["LBN:eth3","NY:eth2"]
     - endpoints: ["NY:eth3", "SGI:eth1"]
