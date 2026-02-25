@@ -1,0 +1,72 @@
+name: lab4-2
+mgmt:
+  network: lab4-2
+  ipv4-subnet: 172.140.24.0/24
+
+topology:
+  kinds:
+    vr-ros:
+      image: vrnetlab/mikrotik_routeros:6.47.9
+
+  nodes:
+    SPB:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.101
+      startup-config: config/p2/spb.rsc
+    HKI:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.102
+      startup-config: config/p2/hki.rsc.rsc
+    SVL:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.103
+      startup-config: config/p2/svl.rsc
+    LND:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.104
+      startup-config: config/p2/lnd.rsc
+    LBN:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.105
+      startup-config: config/p2/lbn.rsc
+    NY:
+      kind: vr-ros
+      mgmt-ipv4: 172.140.24.106
+      startup-config: config/p2/ny.rsc
+    PC1:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 172.140.24.2
+      binds:
+        - ./config:/config
+      exec:
+        - sh /config/pc.sh
+    PC2:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 172.140.24.3
+      binds:
+        - ./config:/config
+      exec:
+        - sh /config/pc.sh
+    PC3:
+      kind: linux
+      image: alpine:latest
+      mgmt-ipv4: 172.140.24.4
+      binds:
+        - ./config:/config
+      exec:
+        - sh /config/pc.sh
+
+
+  links:
+    - endpoints: ["SPB:eth1","HKI:eth1"]
+    - endpoints: ["NY:eth1","LND:eth1"]
+    - endpoints: ["SVL:eth1","LBN:eth1"]
+    - endpoints: ["HKI:eth2","LND:eth3"]
+    - endpoints: ["HKI:eth3","LBN:eth2"]
+    - endpoints: ["LND:eth2","LBN:eth3"]
+    - endpoints: ["SPB:eth2","PC1:eth1"]
+    - endpoints: ["NY:eth2","PC2:eth1"]
+    - endpoints: ["SVL:eth2","PC3:eth1"]
+
