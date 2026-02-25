@@ -37,7 +37,7 @@ topology:
       binds:
         - ./config:/config
       exec:
-        - sh /config/pc.sh
+        - sh /config/pc1.sh
 
     PC2:
       kind: linux
