@@ -5,27 +5,61 @@ set name=SPB
 add name=kate password=123 group=full
 set admin disabled=yes
 
-/interface bridge add name=lo protocol-mode=none
-/ip address add address=10.255.0.4/32 interface=lo comment=loopback
+/ip address
+add address=10.20.1.1/30 interface=ether2
+add address=10.20.2.1/30 interface=ether3
+add address=192.168.10.1/24 interface=ether4
+
+/ip pool
+add name=dhcp-pool ranges=192.168.10.10-192.168.10.100
+
+/ip dhcp-server
+add address-pool=dhcp-pool disabled=no interface=ether4 name=dhcp-server
+enable dhcp-server
+
+/ip dhcp-server network
+add address=192.168.10.0/24 gateway=192.168.10.1
+
+/interface bridge
+add name=loopback
 
 /ip address
-add address=10.0.0.10/30 interface=ether2
-add address=10.0.0.13/30 interface=ether3
+add address=10.255.255.1/32 interface=loopback network=10.255.255.1
 
-/routing ospf instance set [find default=yes] router-id=10.255.0.4
+/routing ospf instance
+add name=inst router-id=10.255.255.1
+
+/routing ospf area
+add name=backbonev2 area-id=0.0.0.0 instance=inst
+
 /routing ospf network
-add network=10.255.0.4/32 area=backbone
-add network=10.0.0.8/30 area=backbone
-add network=10.0.0.12/30 area=backbone
+add area=backbonev2 network=10.20.1.0/30
+add area=backbonev2 network=10.20.2.0/30
+add area=backbonev2 network=192.168.10.0/24
+add area=backbonev2 network=10.255.255.1/32
 
-/mpls ldp set enabled=yes lsr-id=10.255.0.4 transport-address=10.255.0.4
+/mpls ldp
+set lsr-id=10.255.255.1
+set enabled=yes transport-address=10.255.255.1
+
+/mpls ldp advertise-filter
+add prefix=10.255.255.0/24 advertise=yes
+add advertise=no
+
+/mpls ldp accept-filter
+add prefix=10.255.255.0/24 accept=yes
+add accept=no
+
 /mpls ldp interface
 add interface=ether2
 add interface=ether3
 
+/interface bridge
+add name=vpn
+
 /interface vpls
-add name=vpls_to_ny remote-peer=10.255.0.1 vpls-id=100:1 pw-type=raw-ethernet use-control-word=no disabled=no
-/interface bridge add name=br_eompls protocol-mode=none
+add disabled=no name=SGIPC remote-peer=10.255.255.6 cisco-style=yes cisco-style-id=0
+
 /interface bridge port
-add bridge=br_eompls interface=ether4
-add bridge=br_eompls interface=vpls_to_ny
+add interface=ether2 bridge=vpn
+add interface=SGIPC bridge=vpn
