@@ -2,32 +2,32 @@ name: tplg2
 
 mgmt:
   network: lab2
-  ipv4-subnet: 172.12.12.0/24
+  ipv4-subnet: 172.120.12.0/24
 
 topology:
   nodes:
     MSK:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.12.12.11
+      mgmt-ipv4: 172.120.12.11
       startup-config: config/msk.rsc
 
     FRT:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.12.12.21
+      mgmt-ipv4: 172.120.12.21
       startup-config: config/frt.rsc
 
     BRL:
       kind: vr-ros
       image: vrnetlab/mikrotik_routeros:6.47.9
-      mgmt-ipv4: 172.12.12.31
+      mgmt-ipv4: 172.120.12.31
       startup-config: config/brl.rsc
 
     PC1:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.12.12.101
+      mgmt-ipv4: 172.120.12.101
       binds:
         - ./config:/config
       exec:
@@ -36,7 +36,7 @@ topology:
     PC2:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.12.12.102
+      mgmt-ipv4: 172.120.12.102
       binds:
         - ./config:/config
       exec:
@@ -45,7 +45,7 @@ topology:
     PC3:
       kind: linux
       image: alpine:latest
-      mgmt-ipv4: 172.12.12.103
+      mgmt-ipv4: 172.120.12.103
       binds:
         - ./config:/config
       exec:
