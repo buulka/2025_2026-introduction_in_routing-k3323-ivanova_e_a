@@ -13,7 +13,7 @@ add address=192.168.10.1/24 interface=ether4
 /ip pool
 add name=dhcp-pool ranges=192.168.10.10-192.168.10.100
 
-/ip dhcp-server
+/ip dhcp-server enable dhcp-server
 add address-pool=dhcp-pool disabled=no interface=ether4 name=dhcp-server
 enable dhcp-server
 
