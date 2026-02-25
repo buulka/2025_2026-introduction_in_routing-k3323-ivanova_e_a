@@ -21,7 +21,7 @@ topology:
     HKI:
       kind: vr-ros
       mgmt-ipv4: 172.130.13.13
-      startup-config: config/hki.rsc.rsc
+      startup-config: config/hki.rsc
     SPB:
       kind: vr-ros
       mgmt-ipv4: 172.130.13.14
