@@ -1,9 +1,8 @@
-/system identity
-set name=LND
-
 /user
 add name=kate password=123 group=full
 set admin disabled=yes
+/system identity
+set name=R02.LND
 
 /ip address
 add address=10.20.1.2/30 interface=ether1

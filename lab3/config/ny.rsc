@@ -1,9 +1,8 @@
-/system identity
-set name=NY
-
 /user
 add name=kate password=123 group=full
 set admin disabled=yes
+/system identity
+set name=R01.NY
 
 /ip address
 add address=10.20.1.1/30 interface=ether1
@@ -48,10 +47,10 @@ add interface=ether2
 /interface bridge
 add name=vpn
 /interface vpls
-add disabled=no name=SGI remote-peer=10.255.255.13 cisco-style=yes cisco-style-id=100
+add disabled=no name=SGIPC remote-peer=10.255.255.13 cisco-style=yes cisco-style-id=0
 /interface vpls
-add disabled=no name=LBN remote-peer=10.255.255.16 cisco-style=yes cisco-style-id=200
+add disabled=no name=LBNIPC remote-peer=10.255.255.16 cisco-style=yes cisco-style-id=0
 /interface bridge port
 add interface=ether3 bridge=vpn
-add interface=SGI bridge=vpn
-add interface=LBN bridge=vpn
+add interface=SGIPC bridge=vpn
+add interface=LBNIPC bridge=vpn

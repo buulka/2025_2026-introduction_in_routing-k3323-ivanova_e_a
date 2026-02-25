@@ -1,12 +1,8 @@
-/system identity
-set name=HKI
-
 /user
 add name=kate password=123 group=full
 set admin disabled=yes
-
-/interface bridge
-add name=lo
+/system identity
+set name=R03.HKI
 
 /ip address
 add address=10.20.2.2/30 interface=ether1
@@ -51,10 +47,10 @@ add interface=ether2
 /interface bridge
 add name=vpn
 /interface vpls
-add disabled=no name=PC remote-peer=10.255.255.14 cisco-style=yes cisco-style-id=300
+add disabled=no name=PCIPC remote-peer=10.255.255.14 cisco-style=yes cisco-style-id=0
 /interface vpls
-add disabled=no name=SGI remote-peer=10.255.255.11 cisco-style=yes cisco-style-id=100
+add disabled=no name=SGIPC remote-peer=10.255.255.11 cisco-style=yes cisco-style-id=0
 /interface bridge port
 add interface=ether3 bridge=vpn
-add interface=PC bridge=vpn
-add interface=SGI bridge=vpn
+add interface=PCIPC bridge=vpn
+add interface=SGIPC bridge=vpn

@@ -1,9 +1,8 @@
-/system identity
-set name=MSK
-
 /user
 add name=kate password=123 group=full
 set admin disabled=yes
+/system identity
+set name=R05.MSK
 
 /ip address
 add address=10.20.4.2/30 interface=ether1

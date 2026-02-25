@@ -1,9 +1,8 @@
-/system identity
-set name=SPB
-
 /user
 add name=kate password=123 group=full
 set admin disabled=yes
+/system identity
+set name=R04.SPB
 
 /ip address
 add address=10.20.3.2/30 interface=ether1
@@ -48,7 +47,7 @@ add interface=ether2
 /interface bridge
 add name=vpn
 /interface vpls
-add disabled=no name=PC remote-peer=10.255.255.13 cisco-style=yes cisco-style-id=300
+add disabled=no name=PCIPC remote-peer=10.255.255.13 cisco-style=yes cisco-style-id=0
 /interface bridge port
 add interface=ether3 bridge=vpn
-add interface=PC bridge=vpn
+add interface=PCIPC bridge=vpn
