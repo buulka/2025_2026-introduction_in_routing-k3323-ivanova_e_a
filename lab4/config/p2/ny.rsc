@@ -5,6 +5,7 @@ set name=NY
 add name=kate password=123 group=full
 set admin disabled=yes
 
+/ip address
 add address=10.20.2.1/30 interface=ether2
 add address=192.168.11.1/24 interface=ether3
 
