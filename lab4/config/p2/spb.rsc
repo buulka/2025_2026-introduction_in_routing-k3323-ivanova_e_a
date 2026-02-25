@@ -50,6 +50,5 @@ add address=10.100.1.1/24 interface=vpn
 add name=vpn-dhcp-pool ranges=10.100.1.100-10.100.1.254
 /ip dhcp-server
 add address-pool=vpn-dhcp-pool disabled=no interface=vpn name=dhcp-vpls
-enable dhcp-vpls
 /ip dhcp-server network
 add address=10.100.1.0/24 gateway=10.100.1.1
