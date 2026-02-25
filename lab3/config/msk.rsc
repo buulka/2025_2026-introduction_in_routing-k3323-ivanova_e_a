@@ -5,29 +5,33 @@ set name=MSK
 add name=kate password=123 group=full
 set admin disabled=yes
 
-/interface bridge
-add name=lo
-
 /ip address
-add address=1.1.1.16/32 interface=lo
-add address=10.0.0.14/30 interface=ether2 comment="to SPB"
-add address=10.0.0.17/30 interface=ether3 comment="to LBN"
+add address=10.20.4.2/30 interface=ether1
+add address=10.20.5.1/30 interface=ether2
+
+/interface bridge
+add name=loopback
+/ip address
+add address=10.255.255.15/32 interface=loopback network=10.255.255.15
 
 /routing ospf instance
-set [find default=yes] router-id=1.1.1.16
-
+add name=inst router-id=10.255.255.15
+/routing ospf area
+add name=backbonev2 area-id=0.0.0.0 instance=inst
 /routing ospf network
-add network=1.1.1.16/32 area=backbone
-add network=10.0.0.12/30 area=backbone
-add network=10.0.0.16/30 area=backbone
-
-/mpls interface
-add interface=ether2
-add interface=ether3
+add area=backbonev2 network=10.20.4.0/30
+add area=backbonev2 network=10.20.5.0/30
+add area=backbonev2 network=10.255.255.15/32
 
 /mpls ldp
-set enabled=yes lsr-id=1.1.1.16 transport-address=1.1.1.16
-
+set lsr-id=10.255.255.15
+set enabled=yes transport-address=10.255.255.15
+/mpls ldp advertise-filter
+add prefix=10.255.255.0/24 advertise=yes
+add advertise=no
+/mpls ldp accept-filter
+add prefix=10.255.255.0/24 accept=yes
+add accept=no
 /mpls ldp interface
+add interface=ether1
 add interface=ether2
-add interface=ether3

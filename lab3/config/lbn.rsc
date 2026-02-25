@@ -5,33 +5,50 @@ set name=LBN
 add name=kate password=123 group=full
 set admin disabled=yes
 
-/interface bridge
-add name=lo
-
 /ip address
-add address=1.1.1.15/32 interface=lo
-add address=10.0.0.18/30 interface=ether2 comment="to MSK"
-add address=10.0.0.21/30 interface=ether3 comment="to NY"
-add address=10.0.0.26/30 interface=ether4 comment="to HKI"
+add address=10.20.5.2/30 interface=ether1
+add address=10.20.6.1/30 interface=ether2
+add address=192.168.14.1/24 interface=ether3
+
+/ip pool
+add name=dhcp-pool ranges=192.168.14.10-192.168.14.100
+/ip dhcp-server
+add address-pool=dhcp-pool disabled=no interface=ether3 name=dhcp-server
+/ip dhcp-server network
+add address=192.168.14.0/24 gateway=192.168.14.1
+
+/interface bridge
+add name=loopback
+/ip address
+add address=10.255.255.16/32 interface=loopback network=10.255.255.16
 
 /routing ospf instance
-set [find default=yes] router-id=1.1.1.15
-
+add name=inst router-id=10.255.255.16
+/routing ospf area
+add name=backbonev2 area-id=0.0.0.0 instance=inst
 /routing ospf network
-add network=1.1.1.15/32 area=backbone
-add network=10.0.0.16/30 area=backbone
-add network=10.0.0.20/30 area=backbone
-add network=10.0.0.24/30 area=backbone
-
-/mpls interface
-add interface=ether2
-add interface=ether3
-add interface=ether4
+add area=backbonev2 network=10.20.5.0/30
+add area=backbonev2 network=10.20.6.0/30
+add area=backbonev2 network=192.168.14.0/24
+add area=backbonev2 network=10.255.255.16/32
 
 /mpls ldp
-set enabled=yes lsr-id=1.1.1.15 transport-address=1.1.1.15
-
+set lsr-id=10.255.255.16
+set enabled=yes transport-address=10.255.255.16
+/mpls ldp advertise-filter
+add prefix=10.255.255.0/24 advertise=yes
+add advertise=no
+/mpls ldp accept-filter
+add prefix=10.255.255.0/24 accept=yes
+add accept=no
 /mpls ldp interface
+add interface=ether1
 add interface=ether2
-add interface=ether3
-add interface=ether4
+
+/interface bridge
+add name=vpn
+/interface vpls
+add disabled=no name=NY remote-peer=10.255.255.11 cisco-style=yes cisco-style-id=200
+/interface bridge port
+add interface=ether3 bridge=vpn
+add interface=NY bridge=vpn

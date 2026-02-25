@@ -5,29 +5,33 @@ set name=LND
 add name=kate password=123 group=full
 set admin disabled=yes
 
-/interface bridge
-add name=lo
-
 /ip address
-add address=1.1.1.12/32 interface=lo
-add address=10.0.0.2/30 interface=ether2 comment="to NY"
-add address=10.0.0.5/30 interface=ether3 comment="to HKI"
+add address=10.20.1.2/30 interface=ether1
+add address=10.20.2.1/30 interface=ether2
+
+/interface bridge
+add name=loopback
+/ip address
+add address=10.255.255.12/32 interface=loopback network=10.255.255.12
 
 /routing ospf instance
-set [find default=yes] router-id=1.1.1.12
-
+add name=inst router-id=10.255.255.12
+/routing ospf area
+add name=backbonev2 area-id=0.0.0.0 instance=inst
 /routing ospf network
-add network=1.1.1.12/32 area=backbone
-add network=10.0.0.0/30 area=backbone
-add network=10.0.0.4/30 area=backbone
-
-/mpls interface
-add interface=ether2
-add interface=ether3
+add area=backbonev2 network=10.20.1.0/30
+add area=backbonev2 network=10.20.2.0/30
+add area=backbonev2 network=10.255.255.12/32
 
 /mpls ldp
-set enabled=yes lsr-id=1.1.1.12 transport-address=1.1.1.12
-
+set lsr-id=10.255.255.12
+set enabled=yes transport-address=10.255.255.12
+/mpls ldp advertise-filter
+add prefix=10.255.255.0/24 advertise=yes
+add advertise=no
+/mpls ldp accept-filter
+add prefix=10.255.255.0/24 accept=yes
+add accept=no
 /mpls ldp interface
+add interface=ether1
 add interface=ether2
-add interface=ether3
